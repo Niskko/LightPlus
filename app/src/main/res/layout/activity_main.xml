@@ -40,21 +40,35 @@
 
     <Button
         android:id="@+id/btn1"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:onClick="onClickRequestPermission"
-        android:text="Button"
+        android:text="Blink"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnStopAll"
+        android:backgroundTint="@color/purple_200"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/btnMorse"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Morse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn1"
+        android:backgroundTint="@color/purple_200"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:id="@+id/btnStopAll"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="STOP ALL"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="30dp"/>
-
-    <Button
-        android:id="@+id/buttonTEST"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="229dp" />
+        android:backgroundTint="@color/purple_200"
+        android:layout_marginBottom="30dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
