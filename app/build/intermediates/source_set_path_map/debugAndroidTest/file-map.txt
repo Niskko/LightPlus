@@ -1,0 +1,9 @@
+fr.loicpp.lightplus.test.app-core-1.5.0-0 C:\Users\loicp\.gradle\caches\transforms-3\3a0f1f29b9b508714fdb2eeec450727f\transformed\core-1.5.0\res
+fr.loicpp.lightplus.test.app-annotation-experimental-1.3.0-1 C:\Users\loicp\.gradle\caches\transforms-3\b46646453c391fe6a706b89dc8b50dc4\transformed\annotation-experimental-1.3.0\res
+fr.loicpp.lightplus.test.app-androidTest-2 C:\Users\loicp\AndroidStudioProjects\LightPlus\app\build\generated\res\resValues\androidTest\debug
+fr.loicpp.lightplus.test.app-androidTest-3 C:\Users\loicp\AndroidStudioProjects\LightPlus\app\build\generated\res\rs\androidTest\debug
+fr.loicpp.lightplus.test.app-mergeDebugAndroidTestResources-4 C:\Users\loicp\AndroidStudioProjects\LightPlus\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+fr.loicpp.lightplus.test.app-mergeDebugAndroidTestResources-5 C:\Users\loicp\AndroidStudioProjects\LightPlus\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+fr.loicpp.lightplus.test.app-merged_res-6 C:\Users\loicp\AndroidStudioProjects\LightPlus\app\build\intermediates\merged_res\debugAndroidTest
+fr.loicpp.lightplus.test.app-androidTest-7 C:\Users\loicp\AndroidStudioProjects\LightPlus\app\src\androidTest\res
+fr.loicpp.lightplus.test.app-androidTestDebug-8 C:\Users\loicp\AndroidStudioProjects\LightPlus\app\src\androidTestDebug\res

@@ -1,0 +1,3 @@
+fr.loicpp.lightplus.test
+style WhiteBackgroundDialogTheme
+style WhiteBackgroundTheme

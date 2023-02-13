@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "fr.loicpp.lightplus.app-merged_res-29:/drawable_lightplus.xml.flat",
+        "source": "fr.loicpp.lightplus.app-main-30:/drawable/lightplus.xml"
+    },
+    {
+        "merged": "fr.loicpp.lightplus.app-merged_res-29:/layout_activity_screen_lamp.xml.flat",
+        "source": "fr.loicpp.lightplus.app-main-30:/layout/activity_screen_lamp.xml"
+    },
+    {
+        "merged": "fr.loicpp.lightplus.app-merged_res-29:/xml_backup_rules.xml.flat",
+        "source": "fr.loicpp.lightplus.app-main-30:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "fr.loicpp.lightplus.app-merged_res-29:/drawable_ic_launcher_background.xml.flat",
+        "source": "fr.loicpp.lightplus.app-main-30:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "fr.loicpp.lightplus.app-merged_res-29:/xml_data_extraction_rules.xml.flat",
+        "source": "fr.loicpp.lightplus.app-main-30:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "fr.loicpp.lightplus.app-merged_res-29:/layout_activity_main.xml.flat",
+        "source": "fr.loicpp.lightplus.app-main-30:/layout/activity_main.xml"
+    }
+]

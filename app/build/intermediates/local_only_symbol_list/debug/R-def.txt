@@ -1,0 +1,27 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color blue
+color lightblue
+color lightpink
+color pink
+color purple_200
+color purple_500
+color purple_700
+color teal_200
+color teal_700
+color white
+drawable ic_launcher_background
+drawable lightplus
+id btnBlink
+id btnMorse
+id header
+id logo
+id seekBarBlink
+id titles
+layout activity_main
+layout activity_screen_lamp
+string app_name
+style Theme.LightPlus
+xml backup_rules
+xml data_extraction_rules
