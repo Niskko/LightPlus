@@ -3,13 +3,13 @@
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.Color
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,29 +20,51 @@ import kotlin.concurrent.schedule
 class MainActivity : AppCompatActivity() {
     var flashLightStatus: Boolean = false
     var isBlink: Boolean = false
-    var job: Job? = null
+    var morseCoroutine: Job? = null
+    var blinkCoroutine: Job? = null
     var isCoroutine: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        seekBarBlink.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                val num = (seekBar.progress + 1)*10
+                Companion.timeBlink = num.toLong()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
+
         btnMorse.setOnClickListener(View.OnClickListener {
-            btnMorse.setBackgroundColor(ContextCompat.getColor(this, R.color.pink))
-            lightMorse()
+            if (!isCoroutine) {
+                lightMorse()
+            }
+            else {
+                isCoroutine=false
+                btnMorse.setBackgroundColor(ContextCompat.getColor(this, R.color.purple_200))
+            }
         })
-        btnStopAll.setOnClickListener(View.OnClickListener {
-            isCoroutine=false
-            Log.d("DEBUG", "Stop it")
-        })
-        btn1.setOnClickListener(View.OnClickListener {
-            Log.d("DEBUG","Click !")
+        btnBlink.setOnClickListener(View.OnClickListener {
             if(isBlink) {
                 isBlink=false
+                btnBlink.setBackgroundColor(ContextCompat.getColor(this, R.color.purple_200))
             }
             else {
                 isBlink=true
-                blinkLight(Companion.timeBlink)
+                btnBlink.setBackgroundColor(ContextCompat.getColor(this, R.color.pink))
+                blinkLight()
             }
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isCoroutine=false
+        isBlink=false
     }
 
     private val charToMorseDictionary = mapOf(
@@ -85,35 +107,34 @@ class MainActivity : AppCompatActivity() {
         " " to " "
     )
     private fun lightMorse() {
-        if (!isCoroutine) {
-            inputDialog("Morse Code","Veuillez entrer votre phrase en Morse") { result ->
-                val morseCode: String = stringToMorse(result)
-                isCoroutine = true
-                job = GlobalScope.launch {
-                    for (char in morseCode) {
-                        if (isCoroutine) {
-                            morseToLight(char)
-                        } else {
-                            return@launch
-                        }
+        inputDialog("Morse Code","Veuillez entrer votre phrase en Morse") { result ->
+            val morseCode: String = stringToMorse(result)
+            isCoroutine = true
+            morseCoroutine = GlobalScope.launch {
+                for (char in morseCode) {
+                    if (isCoroutine) {
+                        morseToLight(char)
+                    } else {
+                        return@launch
                     }
                 }
+                isCoroutine = false
+                btnMorse.setBackgroundColor(ContextCompat.getColor(this@MainActivity, R.color.purple_200))
             }
-        }
-        else {
-            isCoroutine=false
         }
     }
     private fun stringToMorse(message: String): String {
         val pattern = Regex("^[A-Za-z\\d\\s]+\$")
         var morseCode: String = ""
         if (pattern.containsMatchIn(message)) {
+            btnMorse.setBackgroundColor(ContextCompat.getColor(this, R.color.pink))
             for (letter in message) {
                 morseCode += charToMorseDictionary[letter.uppercaseChar().toString()]
             }
         }
         else {
-            errorDialog("Regex not match")
+            errorDialog("Special characters not available", true)
+            isCoroutine=false
         }
         return morseCode
     }
@@ -143,19 +164,23 @@ class MainActivity : AppCompatActivity() {
                 Thread.sleep(Companion.timeMorsePoint*3)
             }
             else -> {
-                Log.e("ERROR", "Unknown character")
+                errorDialog("Unknown character")
             }
         }
     }
 
-    private fun errorDialog(message: String) {
-        Log.e("ERROR",message)
-        val dialog = AlertDialog.Builder(this)
-            .setTitle("Error")
-            .setMessage(message)
-            .setPositiveButton("OK", null)
-            .create()
-        dialog.show()
+    private fun errorDialog(message: String, isDialog: Boolean = false) {
+        if (isDialog) {
+            val dialog = AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton("OK", null)
+                .create()
+            dialog.show()
+        }
+        else {
+            Log.e("ERROR",message)
+        }
     }
     private fun inputDialog(title: String, message: String, callback: (result: String) -> Unit) {
         val editText = EditText(this)
@@ -173,18 +198,20 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
 
     }
-    private fun blinkLight(Delay: Long = Companion.timeBlink) {
-        if (isBlink) {
-            openFlashLight(true)
-            Timer().schedule(Delay.toLong()) {
-                openFlashLight(false)
-                Timer().schedule(Delay.toLong()) {
-                    blinkLight()
+    private fun blinkLight() {
+        blinkCoroutine = GlobalScope.launch {
+            if (isBlink) {
+                openFlashLight(true)
+                Timer().schedule(Companion.timeBlink) {
+                    openFlashLight(false)
+                    Timer().schedule(Companion.timeBlink) {
+                        blinkLight()
+                    }
                 }
             }
-        }
-        else {
-            openFlashLight(false)
+            else {
+                openFlashLight(false)
+            }
         }
     }
     private fun openFlashLight(turnInto: Boolean?= null) {
@@ -216,7 +243,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val timeBlink: Long = 100
+        var timeBlink: Long = 510
         const val timeMorsePoint: Long = 250
     }
 }
